@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -23,10 +24,10 @@ jobs:
           target: "https://mcdonoughinterpretacion.com" # replace with your target URL
           docker_name: 'owasp/zap2docker-stable'
           docker_command: 'zap-baseline.py'
-          cmd_options: '-J report.json'
+          cmd_options: '-J report.json -r report.html'
         
       - name: Archive ZAP reports
         uses: actions/upload-artifact@v2
         with:
           name: zap-report
-          path: 'report.json'
+          path: 'report.json, report.html'

@@ -30,4 +30,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: zap-report
-          path: 'report.json, report.html'
+          path: |
+            report.json
+            report.html

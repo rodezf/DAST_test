@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Run ZAP Baseline Scan
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.5.0
+        with:
+          target: "https://mcdonoughinterpretacion.com" # replace with your target URL
+          docker_name: 'owasp/zap2docker-stable'
+          docker_command: 'zap-baseline.py'
+          cmd_options: '-J report.json'
+        
+      - name: Archive ZAP reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-report
+          path: 'report.json'
